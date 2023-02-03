@@ -1,5 +1,7 @@
 package br.com.cobbledplugins.productcatalog.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,11 +30,17 @@ public class Product {
   @Column(name = "DESCRIPTION")
   private String description;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "CATEGORY_ID", nullable = false)
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  @Column(name = "CATEGORY_ID", nullable = false)
+  private UUID categoryId;
+
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  @JoinColumn(name = "CATEGORY_ID", insertable = false, updatable = false)
   private Category category;
 
-  @Column(name = "PRICE", nullable = false, precision = 10, scale = 2)
+  @Column(name = "PRICE", nullable = false, precision = 4, scale = 2)
   private BigDecimal price;
 
 }
