@@ -36,7 +36,7 @@ public class Product {
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "CATEGORY_ID", insertable = false, updatable = false)
   private Category category;
 
