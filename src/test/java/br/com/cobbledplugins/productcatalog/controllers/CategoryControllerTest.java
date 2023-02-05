@@ -32,7 +32,7 @@ class CategoryControllerTest {
 
   @Test
   @DisplayName("Should return 200 when get all categories")
-  void findAll() {
+  void shouldReturn200WhenGetAllCategories() {
     when(this.categoryService.findAll(any(Pageable.class), any(), any())).thenReturn(this.categoryPageMock);
 
     ResponseEntity<Page<Category>> response = this.categoryController.findAll(PageRequest.of(0, 10), null, null);
@@ -44,8 +44,8 @@ class CategoryControllerTest {
   }
 
   @Test
-  @DisplayName("Should return 201 when category is created")
-  void create() {
+  @DisplayName("Should return 201 when create category")
+  void shouldReturn201WhenCreateCategory() {
     when(this.categoryService.create(any(Category.class))).thenReturn(this.categoryMock);
 
     ResponseEntity<Category> response = this.categoryController.create(this.categoryMock);
