@@ -34,14 +34,14 @@ class ProductControllerTest {
   @Test
   @DisplayName("Should return 200 when get all products")
   void findAll() {
-    when(this.productService.findAll(any(Pageable.class))).thenReturn(this.productPageMock);
+    when(this.productService.findAll(any(Pageable.class), any(), any())).thenReturn(this.productPageMock);
 
-    ResponseEntity<Page<Product>> response = this.productController.findAll(PageRequest.of(0, 10));
+    ResponseEntity<Page<Product>> response = this.productController.findAll(PageRequest.of(0, 10), null, null);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(this.productPageMock, response.getBody());
 
-    verify(this.productService, times(1)).findAll(any(Pageable.class));
+    verify(this.productService, times(1)).findAll(any(Pageable.class), any(), any());
   }
 
   @Test

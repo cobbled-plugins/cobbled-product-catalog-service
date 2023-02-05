@@ -2,6 +2,7 @@ package br.com.cobbledplugins.productcatalog.services;
 
 import br.com.cobbledplugins.productcatalog.domain.model.Product;
 import br.com.cobbledplugins.productcatalog.domain.repository.ProductRepository;
+import br.com.cobbledplugins.productcatalog.domain.specification.ProductSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +16,12 @@ public class ProductService {
   private final ProductRepository productRepository;
 
   @Transactional
-  public Page<Product> findAll(Pageable pageable) {
-    return this.productRepository.findAll(pageable);
+  public Page<Product> findAll(Pageable pageable, String name, String description) {
+    return this.productRepository.findAll(
+      ProductSpecifications.nameLike(name)
+        .and(ProductSpecifications.descriptionLike(description)),
+      pageable
+    );
   }
 
   @Transactional

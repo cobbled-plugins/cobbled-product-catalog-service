@@ -18,9 +18,13 @@ public class ProductController {
   private final ProductService productService;
 
   @GetMapping
-  public ResponseEntity<Page<Product>> findAll(@PageableDefault Pageable pageable) {
+  public ResponseEntity<Page<Product>> findAll(
+    @PageableDefault Pageable pageable,
+    @RequestParam(required = false) String name,
+    @RequestParam(required = false) String description
+  ) {
     return ResponseEntity
-      .ok(this.productService.findAll(pageable));
+      .ok(this.productService.findAll(pageable, name, description));
   }
 
   @PostMapping
