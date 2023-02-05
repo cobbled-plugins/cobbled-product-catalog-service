@@ -33,14 +33,14 @@ class CategoryControllerTest {
   @Test
   @DisplayName("Should return 200 when get all categories")
   void findAll() {
-    when(this.categoryService.findAll(any(Pageable.class))).thenReturn(this.categoryPageMock);
+    when(this.categoryService.findAll(any(Pageable.class), any(), any())).thenReturn(this.categoryPageMock);
 
-    ResponseEntity<Page<Category>> response = this.categoryController.findAll(PageRequest.of(0, 10));
+    ResponseEntity<Page<Category>> response = this.categoryController.findAll(PageRequest.of(0, 10), null, null);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(this.categoryPageMock, response.getBody());
 
-    verify(this.categoryService, times(1)).findAll(any(Pageable.class));
+    verify(this.categoryService, times(1)).findAll(any(Pageable.class), any(), any());
   }
 
   @Test

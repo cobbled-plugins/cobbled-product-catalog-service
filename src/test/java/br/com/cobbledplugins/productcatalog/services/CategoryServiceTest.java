@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,14 +30,15 @@ class CategoryServiceTest {
   @Mock
   private Category categoryMock;
 
+  @SuppressWarnings("unchecked")
   @Test
   @DisplayName("Should return a page of categories when find all")
   void shouldReturnCategoriesWhenFindAll() {
-    when(this.categoryRepository.findAll(any(Pageable.class)))
+    when(this.categoryRepository.findAll(any(Specification.class), any(Pageable.class)))
       .thenReturn(this.categoryPageMock);
 
-    Page<Category> result = this.categoryService.findAll(PageRequest.of(0, 10));
-    verify(this.categoryRepository, times(1)).findAll(any(Pageable.class));
+    Page<Category> result = this.categoryService.findAll(PageRequest.of(0, 10), null, null);
+    verify(this.categoryRepository, times(1)).findAll(any(Specification.class), any(Pageable.class));
 
     assertEquals(this.categoryPageMock, result);
   }

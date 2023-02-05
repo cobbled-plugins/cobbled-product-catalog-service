@@ -18,9 +18,13 @@ public class CategoryController {
   private final CategoryService categoryService;
 
   @GetMapping
-  public ResponseEntity<Page<Category>> findAll(@PageableDefault Pageable pageable) {
+  public ResponseEntity<Page<Category>> findAll(
+    @PageableDefault Pageable pageable,
+    @RequestParam(name = "name", required = false) String name,
+    @RequestParam(name = "description", required = false) String description
+  ) {
     return ResponseEntity
-      .ok(this.categoryService.findAll(pageable));
+      .ok(this.categoryService.findAll(pageable, name, description));
   }
 
   @PostMapping
