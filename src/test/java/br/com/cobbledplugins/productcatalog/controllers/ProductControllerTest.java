@@ -33,7 +33,7 @@ class ProductControllerTest {
 
   @Test
   @DisplayName("Should return 200 when get all products")
-  void findAll() {
+  void shouldReturn200WhenGetAllProducts() {
     when(this.productService.findAll(any(Pageable.class), any(), any())).thenReturn(this.productPageMock);
 
     ResponseEntity<Page<Product>> response = this.productController.findAll(PageRequest.of(0, 10), null, null);
@@ -45,8 +45,8 @@ class ProductControllerTest {
   }
 
   @Test
-  @DisplayName("Should return 201 when product is created")
-  void create() {
+  @DisplayName("Should return 201 when create product")
+  void shouldReturn201WhenCreateProduct() {
     when(this.productService.create(any(Product.class))).thenReturn(this.productMock);
 
     ResponseEntity<Product> response = this.productController.create(this.productMock);
