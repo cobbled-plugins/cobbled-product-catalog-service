@@ -1,6 +1,7 @@
 package br.com.cobbledplugins.productcatalog.configurations;
 
 import br.com.cobbledplugins.productcatalog.messaging.CategoryClient;
+import br.com.cobbledplugins.productcatalog.messaging.ProductClient;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,7 @@ public class KafkaConfiguration {
 
   @Bean
   public NewTopic productTopic() {
-    return new NewTopic(CategoryClient.TOPIC_NAME, 1, (short) 1);
+    return new NewTopic(ProductClient.TOPIC_NAME, 1, (short) 1);
   }
 
 }
