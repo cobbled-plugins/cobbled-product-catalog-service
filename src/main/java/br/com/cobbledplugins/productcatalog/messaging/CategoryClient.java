@@ -14,17 +14,17 @@ import java.util.UUID;
 @Service
 public class CategoryClient {
 
-  public static String TOPIC_NAME = "CATEGORY";
+  public static String TOPIC_NAME = "CATALOG-CATEGORY";
 
   private final KafkaTemplate<UUID, Category> client;
 
-  public void sendCategoryMessage(Category category) {
+  public void publish(Category category) {
     this.client.send(TOPIC_NAME, category.getId(), category);
   }
 
   @EventListener({ CategoryCreatedEvent.class })
   public void onApplicationEvent(CategoryEvent event) {
-    this.sendCategoryMessage(event.getCategory());
+    this.publish(event.getCategory());
   }
 
 }

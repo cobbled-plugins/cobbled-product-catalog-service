@@ -17,4 +17,9 @@ public class KafkaConfiguration {
     return new NewTopic(CategoryClient.TOPIC_NAME, 1, (short) 1);
   }
 
+  @Bean
+  public NewTopic productTopic() {
+    return new NewTopic(CategoryClient.TOPIC_NAME, 1, (short) 1);
+  }
+
 }

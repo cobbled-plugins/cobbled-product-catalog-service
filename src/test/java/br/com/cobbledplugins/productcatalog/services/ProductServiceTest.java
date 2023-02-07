@@ -2,12 +2,14 @@ package br.com.cobbledplugins.productcatalog.services;
 
 import br.com.cobbledplugins.productcatalog.domain.model.Product;
 import br.com.cobbledplugins.productcatalog.domain.repository.ProductRepository;
+import br.com.cobbledplugins.productcatalog.event.product.ProductCreatedEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -23,6 +25,9 @@ class ProductServiceTest {
 
   @Mock
   private ProductRepository productRepository;
+
+  @Mock
+  private ApplicationEventPublisher eventPublisher;
 
   @Mock
   private Page<Product> productPageMock;
@@ -50,7 +55,9 @@ class ProductServiceTest {
       .thenReturn(this.productMock);
 
     Product result = this.productService.create(this.productMock);
+
     verify(this.productRepository, times(1)).save(any(Product.class));
+    verify(this.eventPublisher, times(1)).publishEvent(any(ProductCreatedEvent.class));
 
     assertEquals(this.productMock, result);
   }

@@ -50,10 +50,10 @@ class CategoryControllerTest {
 
     ResponseEntity<Category> response = this.categoryController.create(this.categoryMock);
 
+    verify(this.categoryService, times(1)).create(any(Category.class));
+
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
     assertEquals(this.categoryMock, response.getBody());
-
-    verify(this.categoryService, times(1)).create(any(Category.class));
   }
 
 }

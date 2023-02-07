@@ -51,10 +51,10 @@ class ProductControllerTest {
 
     ResponseEntity<Product> response = this.productController.create(this.productMock);
 
+    verify(this.productService, times(1)).create(any(Product.class));
+
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
     assertEquals(this.productMock, response.getBody());
-
-    verify(this.productService, times(1)).create(any(Product.class));
   }
 
 }
