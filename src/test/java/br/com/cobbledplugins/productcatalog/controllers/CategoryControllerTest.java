@@ -18,6 +18,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CategoryControllerTest {
 
+  @InjectMocks
+  private CategoryController categoryController;
+
   @Mock
   private CategoryService categoryService;
 
@@ -26,9 +29,6 @@ class CategoryControllerTest {
 
   @Mock
   private Category categoryMock;
-
-  @InjectMocks
-  private CategoryController categoryController;
 
   @Test
   @DisplayName("Should return 200 when get all categories")

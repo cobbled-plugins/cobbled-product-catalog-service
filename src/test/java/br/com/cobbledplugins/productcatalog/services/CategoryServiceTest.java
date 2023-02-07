@@ -2,12 +2,14 @@ package br.com.cobbledplugins.productcatalog.services;
 
 import br.com.cobbledplugins.productcatalog.domain.model.Category;
 import br.com.cobbledplugins.productcatalog.domain.repository.CategoryRepository;
+import br.com.cobbledplugins.productcatalog.event.category.CategoryCreatedEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -18,11 +20,14 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceTest {
 
+  @InjectMocks
+  private CategoryService categoryService;
+
   @Mock
   private CategoryRepository categoryRepository;
 
-  @InjectMocks
-  private CategoryService categoryService;
+  @Mock
+  private ApplicationEventPublisher eventPublisher;
 
   @Mock
   private Page<Category> categoryPageMock;
@@ -50,7 +55,9 @@ class CategoryServiceTest {
       .thenReturn(this.categoryMock);
 
     Category result = this.categoryService.create(this.categoryMock);
+
     verify(this.categoryRepository, times(1)).save(any(Category.class));
+    verify(this.eventPublisher, times(1)).publishEvent(any(CategoryCreatedEvent.class));
 
     assertEquals(this.categoryMock, result);
   }

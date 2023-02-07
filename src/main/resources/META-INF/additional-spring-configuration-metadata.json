@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "spring.kafka.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable Kafka support. Requires a Kafka client on the classpath."
+    }
+  ]
+}

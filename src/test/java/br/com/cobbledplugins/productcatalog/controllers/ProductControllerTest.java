@@ -19,6 +19,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ProductControllerTest {
 
+  @InjectMocks
+  private ProductController productController;
+
   @Mock
   private ProductService productService;
 
@@ -27,9 +30,6 @@ class ProductControllerTest {
 
   @Mock
   private Product productMock;
-
-  @InjectMocks
-  private ProductController productController;
 
   @Test
   @DisplayName("Should return 200 when get all products")
