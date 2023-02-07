@@ -1,0 +1,51 @@
+name: "Docker Publish"
+
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: "Publish"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3.3.0
+      - name: "Set up JDK"
+        uses: actions/setup-java@v3.9.0
+        with:
+          java-version: "17"
+          distribution: "corretto"
+      - name: "Validate Gradle wrapper"
+        uses: gradle/wrapper-validation-action@v1.0.5
+      - name: "Run chmod to make gradlew executable"
+        run: chmod +x ./gradlew
+      - name: "Build with Gradle"
+        uses: gradle/gradle-build-action@v2.3.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          arguments: build -x test --scan
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ${{ vars.DOCKER_REGISTRY }}
+          username: ${{ github.ACTOR }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: metadata
+        uses: docker/metadata-action@v4.3.0
+        with:
+          images: ${{ vars.DOCKER_REGISTRY }}/${{ vars.DOCKER_IMAGE_NAME }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
