@@ -6,9 +6,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
-
-logging:
-  pattern:
-    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([%t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
-  level:
-    org.apache.kafka: ERROR
