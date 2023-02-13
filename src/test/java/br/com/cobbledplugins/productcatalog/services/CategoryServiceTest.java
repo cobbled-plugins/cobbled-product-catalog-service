@@ -43,6 +43,7 @@ class CategoryServiceTest {
       .thenReturn(this.categoryPageMock);
 
     Page<Category> result = this.categoryService.findAll(PageRequest.of(0, 10), null, null);
+
     verify(this.categoryRepository, times(1)).findAll(any(Specification.class), any(Pageable.class));
 
     assertEquals(this.categoryPageMock, result);

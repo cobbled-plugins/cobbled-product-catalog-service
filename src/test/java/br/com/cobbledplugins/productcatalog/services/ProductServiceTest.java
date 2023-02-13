@@ -43,6 +43,7 @@ class ProductServiceTest {
       .thenReturn(this.productPageMock);
 
     Page<Product> result = this.productService.findAll(PageRequest.of(0, 10), null, null);
+
     verify(this.productRepository, times(1)).findAll(any(Specification.class), any(Pageable.class));
 
     assertEquals(this.productPageMock, result);

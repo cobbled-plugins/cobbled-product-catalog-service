@@ -37,10 +37,10 @@ class CategoryControllerTest {
 
     ResponseEntity<Page<Category>> response = this.categoryController.findAll(PageRequest.of(0, 10), null, null);
 
+    verify(this.categoryService, times(1)).findAll(any(Pageable.class), any(), any());
+
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(this.categoryPageMock, response.getBody());
-
-    verify(this.categoryService, times(1)).findAll(any(Pageable.class), any(), any());
   }
 
   @Test

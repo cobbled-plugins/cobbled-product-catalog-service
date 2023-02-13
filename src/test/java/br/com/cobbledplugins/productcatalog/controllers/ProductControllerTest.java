@@ -38,10 +38,10 @@ class ProductControllerTest {
 
     ResponseEntity<Page<Product>> response = this.productController.findAll(PageRequest.of(0, 10), null, null);
 
+    verify(this.productService, times(1)).findAll(any(Pageable.class), any(), any());
+
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(this.productPageMock, response.getBody());
-
-    verify(this.productService, times(1)).findAll(any(Pageable.class), any(), any());
   }
 
   @Test
