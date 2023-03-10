@@ -19,7 +19,7 @@ dependencies {
   implementation("org.springframework.kafka:spring-kafka")
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.3")
 
   runtimeOnly("com.h2database:h2")
 
